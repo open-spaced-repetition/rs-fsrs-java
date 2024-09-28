@@ -1,0 +1,11 @@
+[package]
+name = "rs-fsrs-java"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.38"
+fsrs = { git = "https://github.com/open-spaced-repetition/rs-fsrs" }
+jni = "0.21.1"
+[lib]
+crate-type = ["cdylib"]
