@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.38"
-fsrs = { git = "https://github.com/open-spaced-repetition/rs-fsrs" }
+fsrs = { git = "https://github.com/open-spaced-repetition/rs-fsrs", rev = "1bdd482" }
 jni = "0.21.1"
 [lib]
 crate-type = ["cdylib"]
