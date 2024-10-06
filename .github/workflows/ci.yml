@@ -23,7 +23,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '21'
-          cache: 'maven'
       - name: Build and check
         working-directory: .
         run: |
@@ -44,7 +43,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '8'
-          cache: 'maven'
       - name: Build and test
         working-directory: .
         shell: bash
