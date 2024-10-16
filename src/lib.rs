@@ -6,9 +6,13 @@ use jni::JNIEnv;
 // They carry extra lifetime information to prevent them escaping from the
 // current local frame (which is the scope within which local (temporary)
 // references to Java objects remain valid)
-use jni::objects::{GlobalRef, JClass, JObject, JString};
+use jni::objects::{GlobalRef, JClass, JObject};
 
-use jni::sys::{jlong, jstring};
+use jni::sys::jlong;
+
+fn to_raw<T>(value: T) -> jlong {
+    Box::into_raw(Box::new(value)) as jlong
+}
 
 struct FSRS {
     inner: fsrs::FSRS,
@@ -16,16 +20,16 @@ struct FSRS {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsNew(
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsDefault(
     env: JNIEnv,
     _class: JClass,
     callback: JObject,
 ) -> jlong {
     let global_ref = env.new_global_ref(callback).unwrap();
-    Box::into_raw(Box::new(FSRS {
+    to_raw(FSRS {
         inner: fsrs::FSRS::default(),
         callback: global_ref,
-    })) as jlong
+    })
 }
 
 struct Card {
@@ -40,19 +44,19 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardNew(
     callback: JObject,
 ) -> jlong {
     let global_ref = env.new_global_ref(callback).unwrap();
-    Box::into_raw(Box::new(Card {
+    to_raw(Card {
         inner: fsrs::Card::new(),
         callback: global_ref,
-    })) as jlong
+    })
 }
 
-struct ScheduledCards {
-    inner: fsrs::ScheduledCards,
+struct RecordLog {
+    inner: fsrs::RecordLog,
     callback: GlobalRef,
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_schedule(
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_repeat(
     env: JNIEnv,
     _class: JClass,
     callback: JObject,
@@ -64,42 +68,67 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_schedule(
     let card = &*(card as *const Card);
     let global_ref = env.new_global_ref(callback).unwrap();
 
-    Box::into_raw(Box::new(ScheduledCards {
-        inner: f.inner.schedule(
+    to_raw(RecordLog {
+        inner: f.inner.repeat(
             card.inner.clone(),
             chrono::DateTime::from_timestamp(n as i64, 0).expect("time error"),
         ),
         callback: global_ref,
-    })) as jlong
+    })
+}
+
+struct SchedulingInfo {
+    inner: fsrs::SchedulingInfo,
+    callback: GlobalRef,
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_selectCard(
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_RecordLogGet(
     env: JNIEnv,
     _class: JClass,
     callback: JObject,
-    scheduled_cards: jlong,
+    scheduling_info: jlong,
     rating: jlong,
 ) -> jlong {
-    let f = &*(scheduled_cards as *const ScheduledCards);
+    let f = &*(scheduling_info as *const RecordLog);
     let global_ref = env.new_global_ref(callback).unwrap();
 
-    Box::into_raw(Box::new(Card {
-        inner: f.inner.select_card(match rating {
-            1 => fsrs::Rating::Again,
-            2 => fsrs::Rating::Hard,
-            3 => fsrs::Rating::Good,
-            4 => fsrs::Rating::Easy,
-            _ => unreachable!(),
-        }),
+    to_raw(SchedulingInfo {
+        inner: f
+            .inner
+            .get(&match rating {
+                1 => fsrs::Rating::Again,
+                2 => fsrs::Rating::Hard,
+                3 => fsrs::Rating::Good,
+                4 => fsrs::Rating::Easy,
+                _ => unreachable!(),
+            })
+            .unwrap()
+            .to_owned(),
         callback: global_ref,
-    })) as jlong
+    })
+}
+
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoCard(
+    env: JNIEnv,
+    _class: JClass,
+    callback: JObject,
+    scheduling_info: jlong,
+) -> jlong {
+    let f = &*(scheduling_info as *const SchedulingInfo);
+    let global_ref = env.new_global_ref(callback).unwrap();
+    to_raw(Card {
+        inner: f.inner.card.clone(),
+        callback: global_ref,
+    })
 }
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_getCardScheduledDays(
     env: JNIEnv,
     _class: JClass,
+    callback: JObject,
     card: jlong,
 ) -> jlong {
     let c = &*(card as *const Card);
