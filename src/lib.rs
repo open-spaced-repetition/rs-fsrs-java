@@ -1,3 +1,6 @@
+#![deny(warnings)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
 // This is the interface to the JVM that we'll
 // call the majority of our methods on.
 use jni::JNIEnv;
@@ -6,9 +9,9 @@ use jni::JNIEnv;
 // They carry extra lifetime information to prevent them escaping from the
 // current local frame (which is the scope within which local (temporary)
 // references to Java objects remain valid)
-use jni::objects::{GlobalRef, JClass, JObject};
+use jni::objects::{GlobalRef, JClass, JDoubleArray, JObject, JString};
 
-use jni::sys::{jboolean, jdouble, jfloat, jfloatArray, jint, jlong};
+use jni::sys::{jboolean, jdouble, jint, jlong};
 
 fn to_raw<T>(value: T) -> jlong {
     Box::into_raw(Box::new(value)) as jlong
@@ -21,6 +24,11 @@ struct FSRS {
 
 struct Parameter {
     inner: fsrs::Parameters,
+    callback: GlobalRef,
+}
+
+struct ReviewLog {
+    inner: fsrs::ReviewLog,
     callback: GlobalRef,
 }
 
@@ -38,48 +46,29 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsDefault(
 }
 
 #[no_mangle]
-/// TODO: pass array instead of 19 val
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_ParameterNew(
     env: JNIEnv,
     _class: JClass,
     callback: JObject,
     maximum_interval: jint,
     request_retention: jdouble,
-    w1: jdouble,
-    w2: jdouble,
-    w3: jdouble,
-    w4: jdouble,
-    w5: jdouble,
-    w6: jdouble,
-    w7: jdouble,
-    w8: jdouble,
-    w9: jdouble,
-    w10: jdouble,
-    w11: jdouble,
-    w12: jdouble,
-    w13: jdouble,
-    w14: jdouble,
-    w15: jdouble,
-    w16: jdouble,
-    w17: jdouble,
-    w18: jdouble,
-    w19: jdouble,
+    w: JDoubleArray,
     decay: jdouble,
     factor: jdouble,
     enable_short_term: jboolean,
 ) -> jlong {
     let global_ref = env.new_global_ref(callback).unwrap();
-    let w = [
-        w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15, w16, w17, w18, w19,
-    ];
+    let mut buf = vec![0f64; 19];
+    env.get_double_array_region(w, 0, &mut buf)
+        .expect("too much information");
     to_raw(Parameter {
         inner: fsrs::Parameters {
             maximum_interval,
             request_retention,
-            w,
+            w: buf.try_into().unwrap(),
             decay,
             factor,
-            enable_short_term: enable_short_term == 0, // here is u8, 0 or 1
+            enable_short_term: enable_short_term == (true as u8), // here is u8, 0 or 1
         },
         callback: global_ref,
     })
@@ -93,7 +82,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsNew(
     parameter: jlong,
 ) -> jlong {
     let global_ref = env.new_global_ref(callback).unwrap();
-    let parameter = &*(parameter as *const Parameter);
+    let parameter = unsafe { &*(parameter as *const Parameter) };
     to_raw(FSRS {
         inner: fsrs::FSRS::new(parameter.inner),
         callback: global_ref,
@@ -132,8 +121,8 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_repeat(
     card: jlong,
     n: jlong,
 ) -> jlong {
-    let f = &*(fsrs_ as *const FSRS);
-    let card = &*(card as *const Card);
+    let f = unsafe { &*(fsrs_ as *const FSRS) };
+    let card = unsafe { &*(card as *const Card) };
     let global_ref = env.new_global_ref(callback).unwrap();
 
     to_raw(RecordLog {
@@ -158,7 +147,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_RecordLogGet(
     scheduling_info: jlong,
     rating: jlong,
 ) -> jlong {
-    let f = &*(scheduling_info as *const RecordLog);
+    let f = unsafe { &*(scheduling_info as *const RecordLog) };
     let global_ref = env.new_global_ref(callback).unwrap();
 
     to_raw(SchedulingInfo {
@@ -184,7 +173,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoCard(
     callback: JObject,
     scheduling_info: jlong,
 ) -> jlong {
-    let f = &*(scheduling_info as *const SchedulingInfo);
+    let f = unsafe { &*(scheduling_info as *const SchedulingInfo) };
     let global_ref = env.new_global_ref(callback).unwrap();
     to_raw(Card {
         inner: f.inner.card.clone(),
@@ -193,12 +182,50 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoCard(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_getCardScheduledDays(
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoReviewLog(
+    env: JNIEnv,
+    _class: JClass,
+    callback: JObject,
+    scheduling_info: jlong,
+) -> jlong {
+    let f = unsafe { &*(scheduling_info as *const SchedulingInfo) };
+    let global_ref = env.new_global_ref(callback).unwrap();
+    to_raw(ReviewLog {
+        inner: f.inner.review_log.clone(),
+        callback: global_ref,
+    })
+}
+
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledDays(
     env: JNIEnv,
     _class: JClass,
     callback: JObject,
     card: jlong,
 ) -> jlong {
-    let c = &*(card as *const Card);
+    let c = unsafe { &*(card as *const Card) };
     c.inner.scheduled_days as jlong
+}
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledtoString<'a>(
+    env: JNIEnv<'a>,
+    _class: JClass<'a>,
+    callback: JObject<'a>,
+    card: jlong,
+) -> JString<'a> {
+    let c = unsafe { &*(card as *const Card) };
+    env.new_string(format!("{:?}", c.inner))
+        .expect("string error")
+}
+
+#[no_mangle]
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_ReviewLogtoString<'a>(
+    env: JNIEnv<'a>,
+    _class: JClass<'a>,
+    callback: JObject<'a>,
+    card: jlong,
+) -> JString<'a> {
+    let c = unsafe { &*(card as *const ReviewLog) };
+    env.new_string(format!("{:?}", c.inner))
+        .expect("string error")
 }
