@@ -89,8 +89,8 @@ checksum = "773648b94d0e5d620f64f280777445740e61fe701025087ec8b57f45c791888b"
 
 [[package]]
 name = "fsrs"
-version = "0.3.0"
-source = "git+https://github.com/open-spaced-repetition/rs-fsrs?rev=1bdd482#1bdd482c90eca6209788b1e7eff236b1109608a8"
+version = "1.0.0"
+source = "git+https://github.com/open-spaced-repetition/rs-fsrs?rev=5e6d336#5e6d33617d85b2d82ccff4a4e1d981a46c546167"
 dependencies = [
  "chrono",
 ]
