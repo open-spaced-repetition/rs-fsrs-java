@@ -1,6 +1,4 @@
 #![deny(warnings)]
-#![allow(dead_code)]
-#![allow(unused_variables)]
 // This is the interface to the JVM that we'll
 // call the majority of our methods on.
 use jni::JNIEnv;
@@ -31,7 +29,7 @@ struct ReviewLog {
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsDefault(
-    env: JNIEnv,
+    _env: JNIEnv,
     _class: JClass,
 ) -> jlong {
     to_raw(FSRS {
@@ -67,7 +65,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_ParameterNew(
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsNew(
-    env: JNIEnv,
+    _env: JNIEnv,
     _class: JClass,
     parameter: jlong,
 ) -> jlong {
@@ -83,7 +81,7 @@ struct Card {
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardNew(
-    env: JNIEnv,
+    _env: JNIEnv,
     _class: JClass,
 ) -> jlong {
     to_raw(Card {
@@ -96,8 +94,8 @@ struct RecordLog {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_repeat(
-    env: JNIEnv,
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsRepeat(
+    __env: JNIEnv,
     _class: JClass,
     fsrs_: jlong,
     card: jlong,
@@ -120,7 +118,7 @@ struct SchedulingInfo {
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_RecordLogGet(
-    env: JNIEnv,
+    _env: JNIEnv,
     _class: JClass,
     scheduling_info: jlong,
     rating: jlong,
@@ -144,7 +142,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_RecordLogGet(
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoCard(
-    env: JNIEnv,
+    _env: JNIEnv,
     _class: JClass,
     scheduling_info: jlong,
 ) -> jlong {
@@ -156,7 +154,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoCard(
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoReviewLog(
-    env: JNIEnv,
+    _env: JNIEnv,
     _class: JClass,
     scheduling_info: jlong,
 ) -> jlong {
@@ -168,7 +166,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoReviewLog
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledDays(
-    env: JNIEnv,
+    _env: JNIEnv,
     _class: JClass,
     card: jlong,
 ) -> jlong {
