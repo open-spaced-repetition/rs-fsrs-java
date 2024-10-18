@@ -213,10 +213,10 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetState(
 ) {
     let c = unsafe { &mut *(card as *mut Card) };
     c.inner.state = match state {
+        0 => fsrs::State::New,
         1 => fsrs::State::Learning,
         2 => fsrs::State::Review,
-        3 => fsrs::State::New,
-        4 => fsrs::State::Relearning,
+        3 => fsrs::State::Relearning,
         _ => unreachable!(),
     };
 }
