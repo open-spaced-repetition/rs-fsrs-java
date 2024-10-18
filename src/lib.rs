@@ -1,5 +1,6 @@
 #![deny(warnings)]
 pub mod card;
+pub mod review_log;
 // This is the interface to the JVM that we'll
 // call the majority of our methods on.
 use crate::card::Card;
@@ -9,8 +10,9 @@ use jni::JNIEnv;
 // They carry extra lifetime information to prevent them escaping from the
 // current local frame (which is the scope within which local (temporary)
 // references to Java objects remain valid)
-use jni::objects::{JClass, JDoubleArray, JString};
+use jni::objects::{JClass, JDoubleArray};
 
+use crate::review_log::ReviewLog;
 use jni::sys::{jboolean, jdouble, jint, jlong};
 
 fn to_raw<T>(value: T) -> jlong {
@@ -23,10 +25,6 @@ struct FSRS {
 
 struct Parameter {
     inner: fsrs::Parameters,
-}
-
-struct ReviewLog {
-    inner: fsrs::ReviewLog,
 }
 
 #[no_mangle]
@@ -150,15 +148,4 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoReviewLog
     to_raw(ReviewLog {
         inner: f.inner.review_log.clone(),
     })
-}
-
-#[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_ReviewLogtoString<'a>(
-    env: JNIEnv<'a>,
-    _class: JClass<'a>,
-    card: jlong,
-) -> JString<'a> {
-    let c = unsafe { &*(card as *const ReviewLog) };
-    env.new_string(format!("{:?}", c.inner))
-        .expect("string error")
 }
