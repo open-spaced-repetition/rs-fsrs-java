@@ -27,8 +27,6 @@ public class FSRS {
 
     private static native long SchedulingInfoReviewLog(long SchedulingInfo);
 
-    private static native String ReviewLogtoString(long ReviewLog);
-
     private static native long CardScheduledDays(long card);
 
     private static native void CardScheduledSetDays(long card, long days);
@@ -65,6 +63,27 @@ public class FSRS {
 
     private static native void CardSetLastReview(long card, long last_review_timestamp);
 
+    private static native String ReviewLogtoString(long ReviewLog);
+
+    private static native int ReviewLogRating(long reviewLog);
+
+    private static native void ReviewLogSetRating(long reviewLog, int rating);
+
+    private static native long ReviewLogElapsedDays(long reviewLog);
+
+    private static native void ReviewLogSetElapsedDays(long reviewLog, long elapsed_days);
+
+    private static native long ReviewLogScheduledDays(long reviewLog);
+
+    private static native void ReviewLogSetScheduledDays(long reviewLog, long scheduled_days);
+
+    private static native int ReviewLogState(long reviewLog);
+
+    private static native void ReviewLogSetState(long reviewLog, int state);
+
+    private static native long ReviewLogReviewedDate(long reviewLog);
+
+    private static native void ReviewLogSetReviewedDate(long reviewLog, long reviewed_date_timestamp);
     static {
         System.loadLibrary("rs_fsrs_java");
     }
@@ -234,6 +253,46 @@ public class FSRS {
         public String toString() {
             return ReviewLogtoString(nativePtr);
         }
+
+        public int getRating() {
+            return ReviewLogRating(nativePtr);
+        }
+
+        public void setRating(int rating) {
+            ReviewLogSetRating(nativePtr, rating);
+        }
+
+        public long getElapsedDays() {
+            return ReviewLogElapsedDays(nativePtr);
+        }
+
+        public void setElapsedDays(long elapsed_days) {
+            ReviewLogSetElapsedDays(nativePtr, elapsed_days);
+        }
+
+        public long getScheduledDays() {
+            return ReviewLogScheduledDays(nativePtr);
+        }
+
+        public void setScheduledDays(long scheduled_days) {
+            ReviewLogSetScheduledDays(nativePtr, scheduled_days);
+        }
+
+        public int getState() {
+            return ReviewLogState(nativePtr);
+        }
+
+        public void setState(int state) {
+            ReviewLogSetState(nativePtr, state);
+        }
+
+        public long getReviewedDate() {
+            return ReviewLogReviewedDate(nativePtr);
+        }
+
+        public void setReviewedDate(long reviewed_date_timestamp) {
+            ReviewLogSetReviewedDate(nativePtr, reviewed_date_timestamp);
+        }
     }
 
     public FSRS() {
@@ -267,6 +326,15 @@ public class FSRS {
             System.out.println("State: " + card.getState());
             System.out.println("Last Review Timestamp: " + card.getLastReview());
             System.out.println(review_log.toString());
+
+
+            // Print ReviewLog fields using getters
+            System.out.println("ReviewLog Details:");
+            System.out.println("Rating: " + review_log.getRating());
+            System.out.println("Elapsed Days: " + review_log.getElapsedDays());
+            System.out.println("Scheduled Days: " + review_log.getScheduledDays());
+            System.out.println("State: " + review_log.getState());
+            System.out.println("Reviewed Date Timestamp: " + review_log.getReviewedDate());
         }
     }
 }
