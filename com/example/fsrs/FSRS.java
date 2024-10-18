@@ -21,8 +21,6 @@ public class FSRS {
 
     private static native long RecordLogGet(long card, long rating);
 
-    private static native long CardScheduledDays(long card);
-
     private static native String CardScheduledtoString(long card);
 
     private static native long SchedulingInfoCard(long SchedulingInfo);
@@ -30,6 +28,42 @@ public class FSRS {
     private static native long SchedulingInfoReviewLog(long SchedulingInfo);
 
     private static native String ReviewLogtoString(long ReviewLog);
+
+    private static native long CardScheduledDays(long card);
+
+    private static native void CardScheduledSetDays(long card, long days);
+
+    private static native long CardDue(long card);
+
+    private static native void CardSetDue(long card, long due_timestamp);
+
+    private static native double CardStability(long card);
+
+    private static native void CardSetStability(long card, double stability);
+
+    private static native double CardDifficulty(long card);
+
+    private static native void CardSetDifficulty(long card, double difficulty);
+
+    private static native long CardElapsedDays(long card);
+
+    private static native void CardSetElapsedDays(long card, long elapsed_days);
+
+    private static native int CardReps(long card);
+
+    private static native void CardSetReps(long card, int reps);
+
+    private static native int CardLapses(long card);
+
+    private static native void CardSetLapses(long card, int lapses);
+
+    private static native int CardState(long card);
+
+    private static native void CardSetState(long card, int state);
+
+    private static native long CardLastReview(long card);
+
+    private static native void CardSetLastReview(long card, long last_review_timestamp);
 
     static {
         System.loadLibrary("rs_fsrs_java");
@@ -98,6 +132,79 @@ public class FSRS {
         public String toString() {
             return CardScheduledtoString(nativePtr);
         }
+
+        public long getScheduledDays() {
+            return CardScheduledDays(nativePtr);
+        }
+
+        public void setScheduledDays(long days) {
+            CardScheduledSetDays(nativePtr, days);
+        }
+
+        public long getDue() {
+            return CardDue(nativePtr);
+        }
+
+        public void setDue(long due_timestamp) {
+            CardSetDue(nativePtr, due_timestamp);
+        }
+
+        public double getStability() {
+            return CardStability(nativePtr);
+        }
+
+        public void setStability(double stability) {
+            CardSetStability(nativePtr, stability);
+        }
+
+        public double getDifficulty() {
+            return CardDifficulty(nativePtr);
+        }
+
+        public void setDifficulty(double difficulty) {
+            CardSetDifficulty(nativePtr, difficulty);
+        }
+
+        public long getElapsedDays() {
+            return CardElapsedDays(nativePtr);
+        }
+
+        public void setElapsedDays(long elapsed_days) {
+            CardSetElapsedDays(nativePtr, elapsed_days);
+        }
+
+        public int getReps() {
+            return CardReps(nativePtr);
+        }
+
+        public void setReps(int reps) {
+            CardSetReps(nativePtr, reps);
+        }
+
+        public int getLapses() {
+            return CardLapses(nativePtr);
+        }
+
+        public void setLapses(int lapses) {
+            CardSetLapses(nativePtr, lapses);
+        }
+
+        public int getState() {
+            return CardState(nativePtr);
+        }
+
+        public void setState(int state) {
+            CardSetState(nativePtr, state);
+        }
+
+        public long getLastReview() {
+            return CardLastReview(nativePtr);
+        }
+
+        public void setLastReview(long last_review_timestamp) {
+            CardSetLastReview(nativePtr, last_review_timestamp);
+        }
+
     }
 
     public static class SchedulingInfo {
@@ -149,6 +256,16 @@ public class FSRS {
             card = scheduling_info.getCard();
             ReviewLog review_log = scheduling_info.getReviewLog();
             System.out.println(card.toString());
+            System.out.println("Card Details:");
+            System.out.println("Scheduled Days: " + card.getScheduledDays());
+            System.out.println("Due Timestamp: " + card.getDue());
+            System.out.println("Stability: " + card.getStability());
+            System.out.println("Difficulty: " + card.getDifficulty());
+            System.out.println("Elapsed Days: " + card.getElapsedDays());
+            System.out.println("Reps: " + card.getReps());
+            System.out.println("Lapses: " + card.getLapses());
+            System.out.println("State: " + card.getState());
+            System.out.println("Last Review Timestamp: " + card.getLastReview());
             System.out.println(review_log.toString());
         }
     }
