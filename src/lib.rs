@@ -1,6 +1,8 @@
 #![deny(warnings)]
+pub mod card;
 // This is the interface to the JVM that we'll
 // call the majority of our methods on.
+use crate::card::Card;
 use jni::JNIEnv;
 
 // These objects are what you should use as arguments to your native function.
@@ -72,20 +74,6 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsNew(
     let parameter = unsafe { &*(parameter as *const Parameter) };
     to_raw(FSRS {
         inner: fsrs::FSRS::new(parameter.inner),
-    })
-}
-
-struct Card {
-    inner: fsrs::Card,
-}
-
-#[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardNew(
-    _env: JNIEnv,
-    _class: JClass,
-) -> jlong {
-    to_raw(Card {
-        inner: fsrs::Card::new(),
     })
 }
 
@@ -162,26 +150,6 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoReviewLog
     to_raw(ReviewLog {
         inner: f.inner.review_log.clone(),
     })
-}
-
-#[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledDays(
-    _env: JNIEnv,
-    _class: JClass,
-    card: jlong,
-) -> jlong {
-    let c = unsafe { &*(card as *const Card) };
-    c.inner.scheduled_days as jlong
-}
-#[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledtoString<'a>(
-    env: JNIEnv<'a>,
-    _class: JClass<'a>,
-    card: jlong,
-) -> JString<'a> {
-    let c = unsafe { &*(card as *const Card) };
-    env.new_string(format!("{:?}", c.inner))
-        .expect("string error")
 }
 
 #[no_mangle]
