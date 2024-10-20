@@ -21,8 +21,8 @@ public class FSRS {
         this.fsrs = New(parameter.toNative());
     }
 
-    public RecordLog repeat(Card card, long second) {
-        return new RecordLog(Repeat(fsrs, card.toNative(), second));
+    public RecordLog repeat(Card card, Instant now) {
+        return new RecordLog(Repeat(fsrs, card.toNative(), now.getEpochSecond()));
     }
 
     public FSRS() {
@@ -39,7 +39,7 @@ public class FSRS {
                 0.9, 0.9, false));
         fsrs = new FSRS();
         Card card = new Card();
-        RecordLog scheduledCard = fsrs.repeat(card, Instant.now().getEpochSecond());
+        RecordLog scheduledCard = fsrs.repeat(card, Instant.now());
         for (long rating : new long[] { 1, 2, 3, 4 }) {
             SchedulingInfo scheduling_info = scheduledCard.get(rating);
             card = scheduling_info.getCard();

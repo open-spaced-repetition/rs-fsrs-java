@@ -3,9 +3,9 @@ use jni::objects::JClass;
 use jni::sys::jlong;
 use jni::JNIEnv;
 
-use crate::{to_raw, SchedulingInfo};
+use crate::{scheduling_info::SchedulingInfo, to_raw};
 
-pub struct RecordLog {
+pub(crate) struct RecordLog {
     pub(crate) inner: fsrs::RecordLog,
 }
 #[no_mangle]

@@ -3,8 +3,8 @@ use jni::sys::jlong;
 use jni::JNIEnv;
 
 use crate::to_raw;
-pub struct Card {
-    pub inner: fsrs::Card,
+pub(crate) struct Card {
+    pub(crate) inner: fsrs::Card,
 }
 
 #[no_mangle]
@@ -27,18 +27,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_ScheduledDays(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_ScheduledSetDays(
-    _env: JNIEnv,
-    _class: JClass,
-    card: jlong,
-    days: jlong,
-) {
-    let c = unsafe { &mut *(card as *mut Card) };
-    c.inner.scheduled_days = days as i64;
-}
-
-#[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_ScheduledtoString<'a>(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_toString<'a>(
     env: JNIEnv<'a>,
     _class: JClass<'a>,
     card: jlong,
