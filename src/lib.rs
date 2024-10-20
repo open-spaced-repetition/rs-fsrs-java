@@ -2,6 +2,7 @@
 pub mod card;
 pub mod parameter;
 pub mod review_log;
+pub mod record_log;
 // This is the interface to the JVM that we'll
 // call the majority of our methods on.
 use crate::card::Card;
@@ -12,6 +13,7 @@ use jni::JNIEnv;
 // current local frame (which is the scope within which local (temporary)
 // references to Java objects remain valid)
 use jni::objects::JClass;
+use record_log::RecordLog;
 
 use crate::review_log::ReviewLog;
 use jni::sys::jlong;
@@ -50,9 +52,6 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_New(
     })
 }
 
-struct RecordLog {
-    inner: fsrs::RecordLog,
-}
 
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_Repeat(
@@ -75,30 +74,6 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_Repeat(
 
 struct SchedulingInfo {
     inner: fsrs::SchedulingInfo,
-}
-
-#[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_RecordLog_SchedulingInfo(
-    _env: JNIEnv,
-    _class: JClass,
-    record_log: jlong,
-    rating: jlong,
-) -> jlong {
-    let record_log = unsafe { &*(record_log as *const RecordLog) };
-
-    to_raw(SchedulingInfo {
-        inner: record_log
-            .inner
-            .get(&match rating {
-                1 => fsrs::Rating::Again,
-                2 => fsrs::Rating::Hard,
-                3 => fsrs::Rating::Good,
-                4 => fsrs::Rating::Easy,
-                _ => unreachable!(),
-            })
-            .unwrap()
-            .to_owned(),
-    })
 }
 
 #[no_mangle]
