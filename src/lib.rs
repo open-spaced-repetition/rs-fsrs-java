@@ -1,5 +1,6 @@
 #![deny(warnings)]
 pub mod card;
+pub mod parameter;
 pub mod review_log;
 // This is the interface to the JVM that we'll
 // call the majority of our methods on.
@@ -10,10 +11,10 @@ use jni::JNIEnv;
 // They carry extra lifetime information to prevent them escaping from the
 // current local frame (which is the scope within which local (temporary)
 // references to Java objects remain valid)
-use jni::objects::{JClass, JDoubleArray};
+use jni::objects::JClass;
 
 use crate::review_log::ReviewLog;
-use jni::sys::{jboolean, jdouble, jint, jlong};
+use jni::sys::jlong;
 
 fn to_raw<T>(value: T) -> jlong {
     Box::into_raw(Box::new(value)) as jlong
@@ -34,32 +35,6 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsDefault(
 ) -> jlong {
     to_raw(FSRS {
         inner: fsrs::FSRS::default(),
-    })
-}
-
-#[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_ParameterNew(
-    env: JNIEnv,
-    _class: JClass,
-    maximum_interval: jint,
-    request_retention: jdouble,
-    w: JDoubleArray,
-    decay: jdouble,
-    factor: jdouble,
-    enable_short_term: jboolean,
-) -> jlong {
-    let mut buf = vec![0f64; 19];
-    env.get_double_array_region(w, 0, &mut buf)
-        .expect("too much information");
-    to_raw(Parameter {
-        inner: fsrs::Parameters {
-            maximum_interval,
-            request_retention,
-            w: buf.try_into().unwrap(),
-            decay,
-            factor,
-            enable_short_term: enable_short_term == (true as u8), // here is u8, 0 or 1
-        },
     })
 }
 
@@ -103,7 +78,7 @@ struct SchedulingInfo {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_RecordLogGet(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_RecordLogGet(
     _env: JNIEnv,
     _class: JClass,
     scheduling_info: jlong,
@@ -127,7 +102,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_RecordLogGet(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoCard(
+pub unsafe extern "system" fn Java_com_example_fsrs_SchedulingInfo_Card(
     _env: JNIEnv,
     _class: JClass,
     scheduling_info: jlong,
@@ -139,7 +114,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoCard(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_SchedulingInfoReviewLog(
+pub unsafe extern "system" fn Java_com_example_fsrs_SchedulingInfo_ReviewLog(
     _env: JNIEnv,
     _class: JClass,
     scheduling_info: jlong,
