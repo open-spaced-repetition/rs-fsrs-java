@@ -3,8 +3,10 @@ use jni::objects::{JClass, JDoubleArray};
 use jni::sys::{jboolean, jdouble, jint, jlong};
 use jni::JNIEnv;
 
-use crate::{to_raw, Parameter};
-
+use crate::to_raw;
+pub(crate) struct Parameter {
+    pub(crate) inner: fsrs::Parameters,
+}
 #[no_mangle]
 pub unsafe extern "system" fn Java_com_example_fsrs_Parameter_New(
     env: JNIEnv,
