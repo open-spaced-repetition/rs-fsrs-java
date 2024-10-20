@@ -3,8 +3,6 @@ package com.example.fsrs;
 public class Card {
     private static native long New();
 
-    private static native long RecordLogGet(long card, long rating);
-
     private static native String ScheduledtoString(long card);
 
     private static native long ScheduledDays(long card);
@@ -53,17 +51,11 @@ public class Card {
         this.nativePtr = nativePtr;
     }
 
-    public SchedulingInfo recordLog(long rating) {
-        return new SchedulingInfo(RecordLogGet(nativePtr, rating));
-    }
-
     public long toNative() {
         return nativePtr;
     }
 
-    public SchedulingInfo get(long rating) {
-        return new SchedulingInfo(RecordLogGet(nativePtr, rating));
-    }
+
 
     @Override
     public String toString() {

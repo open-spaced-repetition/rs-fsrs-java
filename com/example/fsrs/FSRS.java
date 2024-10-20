@@ -3,11 +3,11 @@ package com.example.fsrs;
 import java.time.Instant;
 
 public class FSRS {
-    private static native long FsrsNew(long parameter);
+    private static native long New(long parameter);
 
-    private static native long FsrsDefault();
+    private static native long Default();
 
-    private static native long FsrsRepeat(long fsrs, long card, long second);
+    private static native long Repeat(long fsrs, long card, long second);
 
     static {
         System.loadLibrary("rs_fsrs_java");
@@ -18,16 +18,15 @@ public class FSRS {
 
     public FSRS(Parameter parameter) {
         this.parameter = parameter;
-        this.fsrs = FsrsNew(parameter.toNative());
+        this.fsrs = New(parameter.toNative());
     }
 
-    public Card repeat(Card card, long second) {
-        return new Card(FsrsRepeat(fsrs, card.toNative(), second));
-
+    public RecordLog repeat(Card card, long second) {
+        return new RecordLog(Repeat(fsrs, card.toNative(), second));
     }
 
     public FSRS() {
-        this.fsrs = FsrsDefault();
+        this.fsrs = Default();
     }
 
     public static void main(String[] args) {
@@ -40,7 +39,7 @@ public class FSRS {
                 0.9, 0.9, false));
         fsrs = new FSRS();
         Card card = new Card();
-        Card scheduledCard = fsrs.repeat(card, Instant.now().getEpochSecond());
+        RecordLog scheduledCard = fsrs.repeat(card, Instant.now().getEpochSecond());
         for (long rating : new long[] { 1, 2, 3, 4 }) {
             SchedulingInfo scheduling_info = scheduledCard.get(rating);
             card = scheduling_info.getCard();

@@ -29,7 +29,7 @@ struct Parameter {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsDefault(
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_Default(
     _env: JNIEnv,
     _class: JClass,
 ) -> jlong {
@@ -39,7 +39,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsDefault(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsNew(
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_New(
     _env: JNIEnv,
     _class: JClass,
     parameter: jlong,
@@ -55,7 +55,7 @@ struct RecordLog {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_FsrsRepeat(
+pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_Repeat(
     __env: JNIEnv,
     _class: JClass,
     fsrs_: jlong,
@@ -78,16 +78,16 @@ struct SchedulingInfo {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_RecordLogGet(
+pub unsafe extern "system" fn Java_com_example_fsrs_RecordLog_SchedulingInfo(
     _env: JNIEnv,
     _class: JClass,
-    scheduling_info: jlong,
+    record_log: jlong,
     rating: jlong,
 ) -> jlong {
-    let f = unsafe { &*(scheduling_info as *const RecordLog) };
+    let record_log = unsafe { &*(record_log as *const RecordLog) };
 
     to_raw(SchedulingInfo {
-        inner: f
+        inner: record_log
             .inner
             .get(&match rating {
                 1 => fsrs::Rating::Again,
