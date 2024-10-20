@@ -8,7 +8,7 @@ pub struct Card {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardNew(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_New(
     _env: JNIEnv,
     _class: JClass,
 ) -> jlong {
@@ -17,7 +17,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardNew(
     })
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledDays(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_ScheduledDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -27,7 +27,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledDays(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledSetDays(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_ScheduledSetDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -38,7 +38,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledSetDays(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledtoString<'a>(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_ScheduledtoString<'a>(
     env: JNIEnv<'a>,
     _class: JClass<'a>,
     card: jlong,
@@ -50,7 +50,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardScheduledtoString<'
 
 // Due DateTime (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardDue(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_Due(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -61,7 +61,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardDue(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetDue(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetDue(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -73,7 +73,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetDue(
 
 // Stability (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardStability(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_Stability(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -83,7 +83,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardStability(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetStability(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetStability(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -95,7 +95,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetStability(
 
 // Difficulty (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardDifficulty(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_Difficulty(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -105,7 +105,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardDifficulty(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetDifficulty(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetDifficulty(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -117,7 +117,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetDifficulty(
 
 // Elapsed Days (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardElapsedDays(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_ElapsedDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -127,7 +127,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardElapsedDays(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetElapsedDays(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetElapsedDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -139,7 +139,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetElapsedDays(
 
 // Scheduled Days (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetScheduledDays(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetScheduledDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -151,7 +151,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetScheduledDays(
 
 // Reps (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardReps(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_Reps(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -161,7 +161,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardReps(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetReps(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetReps(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -173,7 +173,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetReps(
 
 // Lapses (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardLapses(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_Lapses(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -183,7 +183,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardLapses(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetLapses(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetLapses(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -195,7 +195,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetLapses(
 
 // State (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardState(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_State(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -205,7 +205,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardState(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetState(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetState(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -223,7 +223,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetState(
 
 // Last Review (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardLastReview(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_LastReview(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -234,7 +234,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardLastReview(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_CardSetLastReview(
+pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetLastReview(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
