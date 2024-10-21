@@ -9,7 +9,7 @@ pub(crate) struct RecordLog {
     pub(crate) inner: fsrs::RecordLog,
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_RecordLog_SchedulingInfo(
+pub extern "system" fn Java_com_example_fsrs_RecordLog_SchedulingInfo(
     _env: JNIEnv,
     _class: JClass,
     record_log: jlong,

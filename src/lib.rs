@@ -28,17 +28,14 @@ struct FSRS {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_Default(
-    _env: JNIEnv,
-    _class: JClass,
-) -> jlong {
+pub extern "system" fn Java_com_example_fsrs_FSRS_Default(_env: JNIEnv, _class: JClass) -> jlong {
     to_raw(FSRS {
         inner: fsrs::FSRS::default(),
     })
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_New(
+pub extern "system" fn Java_com_example_fsrs_FSRS_New(
     _env: JNIEnv,
     _class: JClass,
     parameter: jlong,
@@ -50,7 +47,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_New(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_FSRS_Repeat(
+pub extern "system" fn Java_com_example_fsrs_FSRS_Repeat(
     __env: JNIEnv,
     _class: JClass,
     fsrs_: jlong,

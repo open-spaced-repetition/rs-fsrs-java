@@ -8,7 +8,7 @@ pub struct ReviewLog {
     pub inner: fsrs::ReviewLog,
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_toString<'a>(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_toString<'a>(
     env: JNIEnv<'a>,
     _class: JClass<'a>,
     card: jlong,
@@ -18,7 +18,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_toString<'a>(
         .expect("string error")
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_Rating(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_Rating(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -28,7 +28,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_Rating(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_ElapsedDays(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_ElapsedDays(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -38,7 +38,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_ElapsedDays(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_ScheduledDays(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_ScheduledDays(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -48,7 +48,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_ScheduledDays(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_State(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_State(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -58,7 +58,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_State(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_ReviewedDate(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_ReviewedDate(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -69,7 +69,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_ReviewedDate(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetReviewedDate(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetReviewedDate(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -80,7 +80,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetReviewedDate(
         chrono::DateTime::from_timestamp(reviewed_date_timestamp as i64, 0).expect("time error");
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetState(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetState(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -96,7 +96,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetState(
     };
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetScheduledDays(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetScheduledDays(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -106,7 +106,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetScheduledDays(
     rl.inner.scheduled_days = scheduled_days as i64;
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetElapsedDays(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetElapsedDays(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
@@ -116,7 +116,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetElapsedDays(
     rl.inner.elapsed_days = elapsed_days as i64;
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_ReviewLog_SetRating(
+pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetRating(
     _env: JNIEnv,
     _class: JClass,
     review_log: jlong,
