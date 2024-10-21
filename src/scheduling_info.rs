@@ -7,7 +7,7 @@ pub(crate) struct SchedulingInfo {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_SchedulingInfo_Card(
+pub extern "system" fn Java_com_example_fsrs_SchedulingInfo_Card(
     _env: JNIEnv,
     _class: JClass,
     scheduling_info: jlong,
@@ -19,7 +19,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_SchedulingInfo_Card(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_SchedulingInfo_ReviewLog(
+pub extern "system" fn Java_com_example_fsrs_SchedulingInfo_ReviewLog(
     _env: JNIEnv,
     _class: JClass,
     scheduling_info: jlong,

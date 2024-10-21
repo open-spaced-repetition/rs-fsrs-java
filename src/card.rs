@@ -8,16 +8,13 @@ pub(crate) struct Card {
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_New(
-    _env: JNIEnv,
-    _class: JClass,
-) -> jlong {
+pub extern "system" fn Java_com_example_fsrs_Card_New(_env: JNIEnv, _class: JClass) -> jlong {
     to_raw(Card {
         inner: fsrs::Card::new(),
     })
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_ScheduledDays(
+pub extern "system" fn Java_com_example_fsrs_Card_ScheduledDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -27,7 +24,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_ScheduledDays(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_toString<'a>(
+pub extern "system" fn Java_com_example_fsrs_Card_toString<'a>(
     env: JNIEnv<'a>,
     _class: JClass<'a>,
     card: jlong,
@@ -39,7 +36,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_toString<'a>(
 
 // Due DateTime (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_Due(
+pub extern "system" fn Java_com_example_fsrs_Card_Due(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -50,7 +47,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_Due(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetDue(
+pub extern "system" fn Java_com_example_fsrs_Card_SetDue(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -62,7 +59,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetDue(
 
 // Stability (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_Stability(
+pub extern "system" fn Java_com_example_fsrs_Card_Stability(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -72,7 +69,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_Stability(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetStability(
+pub extern "system" fn Java_com_example_fsrs_Card_SetStability(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -84,7 +81,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetStability(
 
 // Difficulty (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_Difficulty(
+pub extern "system" fn Java_com_example_fsrs_Card_Difficulty(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -94,7 +91,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_Difficulty(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetDifficulty(
+pub extern "system" fn Java_com_example_fsrs_Card_SetDifficulty(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -106,7 +103,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetDifficulty(
 
 // Elapsed Days (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_ElapsedDays(
+pub extern "system" fn Java_com_example_fsrs_Card_ElapsedDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -116,7 +113,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_ElapsedDays(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetElapsedDays(
+pub extern "system" fn Java_com_example_fsrs_Card_SetElapsedDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -128,7 +125,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetElapsedDays(
 
 // Scheduled Days (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetScheduledDays(
+pub extern "system" fn Java_com_example_fsrs_Card_SetScheduledDays(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -140,7 +137,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetScheduledDays(
 
 // Reps (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_Reps(
+pub extern "system" fn Java_com_example_fsrs_Card_Reps(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -150,7 +147,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_Reps(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetReps(
+pub extern "system" fn Java_com_example_fsrs_Card_SetReps(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -162,7 +159,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetReps(
 
 // Lapses (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_Lapses(
+pub extern "system" fn Java_com_example_fsrs_Card_Lapses(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -172,7 +169,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_Lapses(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetLapses(
+pub extern "system" fn Java_com_example_fsrs_Card_SetLapses(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -184,7 +181,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetLapses(
 
 // State (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_State(
+pub extern "system" fn Java_com_example_fsrs_Card_State(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -194,7 +191,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_State(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetState(
+pub extern "system" fn Java_com_example_fsrs_Card_SetState(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -212,7 +209,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetState(
 
 // Last Review (Getter and Setter)
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_LastReview(
+pub extern "system" fn Java_com_example_fsrs_Card_LastReview(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,
@@ -223,7 +220,7 @@ pub unsafe extern "system" fn Java_com_example_fsrs_Card_LastReview(
 }
 
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Card_SetLastReview(
+pub extern "system" fn Java_com_example_fsrs_Card_SetLastReview(
     _env: JNIEnv,
     _class: JClass,
     card: jlong,

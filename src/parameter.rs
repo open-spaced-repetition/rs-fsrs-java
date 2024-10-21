@@ -8,7 +8,7 @@ pub(crate) struct Parameter {
     pub(crate) inner: fsrs::Parameters,
 }
 #[no_mangle]
-pub unsafe extern "system" fn Java_com_example_fsrs_Parameter_New(
+pub extern "system" fn Java_com_example_fsrs_Parameter_New(
     env: JNIEnv,
     _class: JClass,
     maximum_interval: jint,
