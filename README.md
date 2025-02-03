@@ -8,6 +8,10 @@ see [example](./com/example/fsrs/FSRS.java)
 
 ## Develop
 
+<https://idx.google.com/import>
+
+or
+
 see [Makefile](./Makefile)
 
 ```
