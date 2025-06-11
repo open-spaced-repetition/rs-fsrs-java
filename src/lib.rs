@@ -60,7 +60,7 @@ pub extern "system" fn Java_com_example_fsrs_FSRS_Repeat(
     to_raw(RecordLog {
         inner: f.inner.repeat(
             card.inner.clone(),
-            chrono::DateTime::from_timestamp(n as i64, 0).expect("time error"),
+            chrono::DateTime::from_timestamp(n, 0).expect("time error"),
         ),
     })
 }

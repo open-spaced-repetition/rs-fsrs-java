@@ -77,7 +77,7 @@ pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetReviewedDate(
 ) {
     let rl = unsafe { &mut *(review_log as *mut ReviewLog) };
     rl.inner.reviewed_date =
-        chrono::DateTime::from_timestamp(reviewed_date_timestamp as i64, 0).expect("time error");
+        chrono::DateTime::from_timestamp(reviewed_date_timestamp, 0).expect("time error");
 }
 #[no_mangle]
 pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetState(
@@ -103,7 +103,7 @@ pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetScheduledDays(
     scheduled_days: jlong,
 ) {
     let rl = unsafe { &mut *(review_log as *mut ReviewLog) };
-    rl.inner.scheduled_days = scheduled_days as i64;
+    rl.inner.scheduled_days = scheduled_days;
 }
 #[no_mangle]
 pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetElapsedDays(
@@ -113,7 +113,7 @@ pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetElapsedDays(
     elapsed_days: jlong,
 ) {
     let rl = unsafe { &mut *(review_log as *mut ReviewLog) };
-    rl.inner.elapsed_days = elapsed_days as i64;
+    rl.inner.elapsed_days = elapsed_days;
 }
 #[no_mangle]
 pub extern "system" fn Java_com_example_fsrs_ReviewLog_SetRating(

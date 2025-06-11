@@ -54,7 +54,7 @@ pub extern "system" fn Java_com_example_fsrs_Card_SetDue(
     due_timestamp: jlong,
 ) {
     let c = unsafe { &mut *(card as *mut Card) };
-    c.inner.due = chrono::DateTime::from_timestamp(due_timestamp as i64, 0).expect("time error");
+    c.inner.due = chrono::DateTime::from_timestamp(due_timestamp, 0).expect("time error");
 }
 
 // Stability (Getter and Setter)
@@ -120,7 +120,7 @@ pub extern "system" fn Java_com_example_fsrs_Card_SetElapsedDays(
     elapsed_days: jlong,
 ) {
     let c = unsafe { &mut *(card as *mut Card) };
-    c.inner.elapsed_days = elapsed_days as i64;
+    c.inner.elapsed_days = elapsed_days;
 }
 
 // Scheduled Days (Getter and Setter)
@@ -132,7 +132,7 @@ pub extern "system" fn Java_com_example_fsrs_Card_SetScheduledDays(
     days: jlong,
 ) {
     let c = unsafe { &mut *(card as *mut Card) };
-    c.inner.scheduled_days = days as i64;
+    c.inner.scheduled_days = days;
 }
 
 // Reps (Getter and Setter)
@@ -228,5 +228,5 @@ pub extern "system" fn Java_com_example_fsrs_Card_SetLastReview(
 ) {
     let c = unsafe { &mut *(card as *mut Card) };
     c.inner.last_review =
-        chrono::DateTime::from_timestamp(last_review_timestamp as i64, 0).expect("time error");
+        chrono::DateTime::from_timestamp(last_review_timestamp, 0).expect("time error");
 }
